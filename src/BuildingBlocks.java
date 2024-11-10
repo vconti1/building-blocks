@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,12 +15,32 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 	final int height = 16;
 	final int boardWidth = 360;
 	final int boardHeight = 640;
+	int blockX = boardWidth/8;
+	int blockY = boardHeight/2;
+	int blockWidth = 34;
+	int blockHeight = 24;
+	
+	class Block{
+		int x = blockX;
+		int y = blockY;
+		int width = blockWidth;
+		int height = blockHeight;
+		
+		
+		
+		Block(){
+		}
+	}
 	
 	BuildingBlocks(){
 		setPreferredSize(new Dimension(boardWidth,boardHeight));
 		setBackground(Color.black);
 		setFocusable(true);
 		addKeyListener(this);
+	}
+	
+	public void draw(Graphics g) {
+		g.drawRect(blockX, blockY, blockWidth, blockHeight);
 	}
 
 	@Override
