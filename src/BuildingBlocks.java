@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 	
 	BuildingBlocks(){
 		setPreferredSize(new Dimension(boardWidth,boardHeight));
+		setBackground(Color.black);
 		setFocusable(true);
 		addKeyListener(this);
 	}
