@@ -1,3 +1,4 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -31,9 +32,8 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 	
 	
 	//Game logic
-		int velocityX = -4;
-		int velocityY = 0;
-		int gravity = 4;
+		
+		int gravity = 5;
 		
 		ArrayList<Block> blocks;
 		
@@ -77,10 +77,12 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 		gameLoop = new Timer(1000/60,this);
 		gameLoop.start();
 	}
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		draw(g);
 	}
+	
 	public void draw(Graphics g) {
 		
 		Graphics2D floor = (Graphics2D) g;
@@ -91,7 +93,7 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 		
 		// Draw each block
 	    for (Block b : blocks) {
-	        bl.setPaint(Color.white);
+	        bl.setPaint(Color.blue);
 	        bl.fillRect(b.x, b.y, b.width, b.height);
 	    }
 		
@@ -102,7 +104,6 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 	    newBlock.x = boardWidth / 2; // Center the new block
 	    newBlock.y = 0; // Start at the top
 	    blocks.add(newBlock);
-		
 	}
 
 	@Override
@@ -141,6 +142,7 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 	public void actionPerformed(ActionEvent e) {
 		 	dropBlocks();
 		    repaint();
+		    
 	}
 	
 	public void dropBlocks() {
@@ -188,4 +190,27 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 	    }
 	    return currentBlock.y;
 	}
+	
+	//This method changes the color for each frame, not for each block. Will need work
+	/*
+	private Color randomColor() {
+		
+		Random rand = new Random();
+		int num = rand.nextInt(8);
+		
+		switch(num) {
+		
+		case 1: return Color.white;
+		case 2: return Color.blue;
+		case 3: return Color.red;
+		case 4: return Color.green;
+		case 5: return Color.yellow;
+		case 6: return Color.orange;
+		case 7: return Color.pink;
+		}
+		
+		
+		return Color.white;
+	}
+	*/
 }
