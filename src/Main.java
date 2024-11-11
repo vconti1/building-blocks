@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 import javax.swing.JFrame;
 
 public class Main {
@@ -9,6 +11,7 @@ public class Main {
 		int boardHeight = 640;
 		
 		JFrame frame = new JFrame("Building Blocks");
+		
 
 		frame.setSize(boardWidth, boardHeight);
 		frame.setLocationRelativeTo(null);
