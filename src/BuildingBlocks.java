@@ -97,7 +97,7 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 		
 	}
 	
-	public void spawnBlock(Graphics g) {
+	public void spawnBlock() {
 		Block newBlock = new Block();
 	    newBlock.x = boardWidth / 2; // Center the new block
 	    newBlock.y = 0; // Start at the top
@@ -145,13 +145,43 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 		        // Apply gravity to make the block fall
 		        currentBlock.y += gravity;
 
-		        // Stop the block if it reaches the floor
-		        if (currentBlock.y + currentBlock.height >= boardHeight - floorOffset) {
-		            currentBlock.y = boardHeight - floorOffset - currentBlock.height;
-		            spawnBlock(null); // Spawn a new block when this one lands
+		        // Check for collision with the floor or other blocks
+		        if (currentBlock.y + currentBlock.height >= boardHeight - floorOffset || isCollidingWithOtherBlocks(currentBlock)) {
+		            // Snap the block to the floor or the block it landed on
+		            if (currentBlock.y + currentBlock.height >= boardHeight - floorOffset) {
+		                currentBlock.y = boardHeight - floorOffset - currentBlock.height;
+		            } else {
+		                // Align the block on top of the block it collided with
+		                currentBlock.y = getCollisionYPosition(currentBlock);
+		            }
+		            
+		            // Spawn a new block at the top
+		            spawnBlock();
 		        }
 		    }
 		    repaint();
 	}
-	
+	private boolean isCollidingWithOtherBlocks(Block currentBlock) {
+	    for (int i = 0; i < blocks.size() - 1; i++) {
+	        Block otherBlock = blocks.get(i);
+	        // Check if the current block is directly above another block and within the same x bounds
+	        if (currentBlock.x < otherBlock.x + otherBlock.width &&
+	            currentBlock.x + currentBlock.width > otherBlock.x &&
+	            currentBlock.y + currentBlock.height >= otherBlock.y) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	private int getCollisionYPosition(Block currentBlock) {
+	    for (int i = 0; i < blocks.size() - 1; i++) {
+	        Block otherBlock = blocks.get(i);
+	        if (currentBlock.x < otherBlock.x + otherBlock.width &&
+	            currentBlock.x + currentBlock.width > otherBlock.x &&
+	            currentBlock.y + currentBlock.height >= otherBlock.y) {
+	            return otherBlock.y - currentBlock.height;
+	        }
+	    }
+	    return currentBlock.y;
+	}
 }
