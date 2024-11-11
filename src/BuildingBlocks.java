@@ -139,27 +139,31 @@ public class BuildingBlocks extends JPanel implements ActionListener, KeyListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		 if (!blocks.isEmpty()) {
-		        Block currentBlock = blocks.get(blocks.size() - 1);
-		        
-		        // Apply gravity to make the block fall
-		        currentBlock.y += gravity;
-
-		        // Check for collision with the floor or other blocks
-		        if (currentBlock.y + currentBlock.height >= boardHeight - floorOffset || isCollidingWithOtherBlocks(currentBlock)) {
-		            // Snap the block to the floor or the block it landed on
-		            if (currentBlock.y + currentBlock.height >= boardHeight - floorOffset) {
-		                currentBlock.y = boardHeight - floorOffset - currentBlock.height;
-		            } else {
-		                // Align the block on top of the block it collided with
-		                currentBlock.y = getCollisionYPosition(currentBlock);
-		            }
-		            
-		            // Spawn a new block at the top
-		            spawnBlock();
-		        }
-		    }
+		 	dropBlocks();
 		    repaint();
+	}
+	
+	public void dropBlocks() {
+		if (!blocks.isEmpty()) {
+	        Block currentBlock = blocks.get(blocks.size() - 1);
+	        
+	        // Apply gravity to make the block fall
+	        currentBlock.y += gravity;
+
+	        // Check for collision with the floor or other blocks
+	        if (currentBlock.y + currentBlock.height >= boardHeight - floorOffset || isCollidingWithOtherBlocks(currentBlock)) {
+	            // Snap the block to the floor or the block it landed on
+	            if (currentBlock.y + currentBlock.height >= boardHeight - floorOffset) {
+	                currentBlock.y = boardHeight - floorOffset - currentBlock.height;
+	            } else {
+	                // Align the block on top of the block it collided with
+	                currentBlock.y = getCollisionYPosition(currentBlock);
+	            }
+	            
+	            // Spawn a new block at the top
+	            spawnBlock();
+	        }
+	    }
 	}
 	private boolean isCollidingWithOtherBlocks(Block currentBlock) {
 	    for (int i = 0; i < blocks.size() - 1; i++) {
